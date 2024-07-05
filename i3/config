@@ -319,7 +319,7 @@ exec        --no-startup-id mousetrap -t 7
 exec        --no-startup-id dunst
 exec        --no-startup-id sleep 1;picom --corner-radius 5 
 exec        --no-startup-id urxvtd
-exec_always --no-startup-id sleep 1;/home/a$USER/.config/polybar/launch.sh
+exec_always --no-startup-id sleep 1;/home/$USER/.config/polybar/launch.sh
 exec        --no-startup-id sleep 2; udiskie
 exec        --no-startup-id sleep 1; pipewire & pipewire-pulse & pipewire-media-session
 exec        --no-startup-id feh --bg-scale /home/$USER/Immagini/Wallpapers/Vocaloid/Miku.jpg
