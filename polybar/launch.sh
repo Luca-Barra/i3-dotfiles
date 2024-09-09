@@ -10,5 +10,6 @@ polybar first 2>&1 | tee -a /tmp/polybar.log & disown
 polybar center 2>&1 | tee -a /tmp/polybar.log & disown
 polybar right 2>&1 | tee -a /tmp/polybar.log & disown
 ~/.config/polybar/scripts/nowPlayingLauncher.sh & disown
+~/.config/polybar/scripts/cavaLauncher.sh & disown
 
 echo "Polybar launched..."

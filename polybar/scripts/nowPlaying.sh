@@ -28,7 +28,7 @@ scroll_text() {
     local padded_text="$text$padding"
     local total_len=$((text_length + padding_len))
 
-    symbol=$(symbol)
+    local symbol=$(symbol)  # Use local variable for symbol
 
     if ((text_length <= window_len)); then
         echo "${symbol}" "${padded_text}"
@@ -49,16 +49,26 @@ scroll_text() {
             echo "${symbol}" "${padded_text:i:window_len}"
         fi
         sleep "$delay"
+
+        # Check if mpv process is still running
+   
     done
 }
 
 main() {
-    local window_len=24
+    local window_len=30
     local delay=0.2
+
+    echo "Loading..." 
+    sleep 10
 
     while true; do
         scroll_text ${window_len} ${delay}
     done
+
+    echo "Stopping..." 
+    sleep 3
 }
 
 main
+

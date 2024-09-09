@@ -1,14 +1,14 @@
+# language {{{
+
+set $LANG en_US.UTF-8
+set $LANGUAGE en_US:en
+set $LC_ALL en_US.UTF-8
+
+#}}}
+
 
 # Colors and Customization {{{
 
-# Set colors from xrdb. Colors must be set in xrdb before i3 config is loaded.
-set $bar-bg    #000000                                                           
-set $wb-focused     #00FF5E                                                      
-set $wb-active      #1cb055                                                      
-set $wb-inactive    #777777                                                      
-set $wb-focused-bg  #0a4220                                                      
-set $wb-urgent      #F20C04                                                      
-set $wb-urgent-bg   #420a20
 set $rosewater #f4dbd6
 set $flamingo #f0c6c6
 set $pink #f5bde6
@@ -76,7 +76,7 @@ set $workspace22 "22"
 # Window Movement (excluding workspaces) {{{
 
 # terminals
-bindsym $mod+q  exec --no-startup-id $terminal
+bindsym $mod+q       exec --no-startup-id $terminal
 bindsym $sup+Return  exec --no-startup-id ~/scripts/selectterm
 
 # kill
@@ -131,6 +131,9 @@ bindsym $sup+Shift+Right resize grow   width  1 px or 1 ppt
 # Gaps {{{
 gaps inner 15
 gaps outer 35
+gaps bottom 10
+gaps left 10
+gaps right 10
 
 bindsym $mod+minus       gaps inner all minus 5
 bindsym $mod+plus        gaps inner all plus  5
@@ -165,15 +168,15 @@ bindsym $mod+Shift+F11 move container to workspace $workspace21
 bindsym $mod+Shift+F12 move container to workspace $workspace22
 
 # active workspace
-bindsym $mod+1   workspace $workspace1; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku.jpg
-bindsym $mod+2   workspace $workspace2; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Gakupo.jpg
-bindsym $mod+3   workspace $workspace3; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku3.jpg
+bindsym $mod+1   workspace $workspace1; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku9.jpg
+bindsym $mod+2   workspace $workspace2; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku10.jpg
+bindsym $mod+3   workspace $workspace3; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku.jpg
 bindsym $mod+4   workspace $workspace4; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Kaito3.jpeg
 bindsym $mod+5   workspace $workspace5; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku5.jpg
 bindsym $mod+6   workspace $workspace6; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Kaito.jpg
 bindsym $mod+7   workspace $workspace7; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku6.jpg
 bindsym $mod+8   workspace $workspace8; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Kaito2.jpg
-bindsym $mod+9   workspace $workspace9
+bindsym $mod+9   workspace $workspace9; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku8.jpg
 bindsym $mod+0   workspace $workspace10
 bindsym $mod+F1  workspace $workspace11
 bindsym $mod+F2  workspace $workspace12
@@ -187,15 +190,15 @@ bindsym $mod+F10 workspace $workspace20
 bindsym $mod+F11 workspace $workspace21
 bindsym $mod+F12 workspace $workspace22
 
-bindsym $sup+1   workspace $workspace1
-bindsym $sup+2   workspace $workspace2
-bindsym $sup+3   workspace $workspace3
-bindsym $sup+4   workspace $workspace4
-bindsym $sup+5   workspace $workspace5
-bindsym $sup+6   workspace $workspace6
-bindsym $sup+7   workspace $workspace7
-bindsym $sup+8   workspace $workspace8
-bindsym $sup+9   workspace $workspace9
+bindsym $sup+1   workspace $workspace1; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku9.jpg
+bindsym $sup+2   workspace $workspace2; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku10.jpg
+bindsym $sup+3   workspace $workspace3; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku.jpg
+bindsym $sup+4   workspace $workspace4; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Kaito3.jpeg
+bindsym $sup+5   workspace $workspace5; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku5.jpg
+bindsym $sup+6   workspace $workspace6; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Kaito.jpg
+bindsym $sup+7   workspace $workspace7; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku6.jpg
+bindsym $sup+8   workspace $workspace8; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Kaito2.jpg
+bindsym $sup+9   workspace $workspace9; exec --no-startup-id feh --bg-fill /home/$USER/Immagini/Wallpapers/Vocaloid/Miku8.jpg
 bindsym $sup+0   workspace $workspace10
 bindsym $sup+F1  workspace $workspace11
 bindsym $sup+F2  workspace $workspace12
@@ -233,42 +236,91 @@ workspace $workspace20 output DP1
 workspace $workspace21 output DP1
 workspace $workspace22 output DP1
 # }}}
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
 # Other Keybindings {{{
+
 ## Screenshots
-bindsym Print exec --no-startup-id maim "/home/$USER/Immagini/$(date)"
-bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Immagini/$(date)"
-bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Immagini/$(date)"
+bindsym Print            exec --no-startup-id maim "/home/$USER/Immagini/$(date).png"
+bindsym $mod+Print       exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Immagini/$(date).png"
+bindsym Shift+Print      exec --no-startup-id maim --select "/home/$USER/Immagini/$(date).png"
 
 ## Clipboard Screenshots
-bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
-bindsym Ctrl+$mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+bindsym Ctrl+Print       exec --no-startup-id maim | xclip -selection clipboard -t image/png
+bindsym Ctrl+$mod+Print  exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
 bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png
+
+## Brightness
+bindsym XF86MonBrightnessUp   exec --no-startup-id ~/.config/i3/Brightness.sh up
+bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/i3/Brightness.sh down
+
+## Lockscreen
 bindsym $mod+l       exec --no-startup-id exec betterlockscreen -l
+
+## Telegram
 bindsym $mod+t       exec --no-startup-id 64gram-desktop
+
+## File manager - GUI
 bindsym $mod+e       exec --no-startup-id thunar
+
+## Client Mail
 bindsym $mod+w       exec --no-startup-id kitty -e neomutt
-bindsym $mod+z       exec --no-startup-id firefox
+
+## Nvim
+bindsym $mod+n       exec --no-startup-id kitty -e nvim
+
+## Browser
+bindsym $mod+z       exec --no-startup-id waterfox
+
+## Video recording
 bindsym $mod+p       exec --no-startup-id obs
+
+## Crunchyroll
+bindsym $mod+c       exec --no-startup-id crunchyroll
+
+## Wifi menu
+bindsym $sup+w       exec --no-startup-id /home/$USER/.config/i3/wifi.sh
+bindsym $mod+SHIFT+w exec --no-startup-id /home/$USER/.config/i3/wifi.sh
+
+## Discord
 bindsym $mod+d       exec --no-startup-id vesktop
-bindsym $mod+End     exec --no-startup-id ~/scripts/calnotify.sh
+
+## Simple exit
 bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'Exit?' -b 'Yes, exit i3' 'i3-msg exit'"
+
+## Reload i3
 bindsym $mod+Shift+r exec --no-startup-id "i3-msg restart"
-bindsym $mod+r   exec --no-startup-id "rofi -show drun -lines 10 -width 40"
+
+## Application launcher
+bindsym $mod+r       exec --no-startup-id "rofi -show drun -lines 10 -width 20"
+
+## Notes
+bindsym $mod+Shift+n exec --no-startup-id kitty -e sh -c 'cd ~/Repo/LaTeX && nvim .'
+
+## File manager - Terminal
 bindsym $mod+o       exec --no-startup-id kitty -e lf
+
+## Audio Visualizer
+bindsym $mod+y       exec --no-startup-id kitty -e cava
+
+## Reload
 bindsym $mod+Shift+c reload
+
+## Music
+bindsym $mod+Shift+m exec --no-startup-id /home/$USER/.config/i3/music.sh
+
+## Switcher
+bindsym $mod+$sup+r exec  --no-startup-id /home/$USER/.config/i3/rice_switcher.sh
+
+## Powermenu
+bindsym $mod+x exec --no-startup-id ~/.config/polybar/scripts/powermenu.sh 
+
 # }}}
 
 # Pulse Audio Controls {{{
-bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute 0 toggle
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -5%
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5%
+bindsym XF86AudioMute        exec --no-startup-id /home/$USER/.config/dunst/volume.sh mute
+bindsym XF86AudioLowerVolume exec --no-startup-id /home/$USER/.config/dunst/volume.sh down
+bindsym XF86AudioRaiseVolume exec --no-startup-id /home/$USER/.config/dunst/volume.sh up
 
-bindsym Control+Escape exec --no-startup-id pactl set-sink-mute 0 toggle
-bindsym Control+F2     exec --no-startup-id pactl -- set-sink-volume 0 -5%
-bindsym Control+F3     exec --no-startup-id pactl -- set-sink-volume 0 +5%
 # }}}
 
 # Media Player Controls {{{
@@ -285,22 +337,6 @@ bindsym Control+Left  exec --no-startup-id mpc prev
 
 # }}}
 
-mode "exit: [l]ogout, [r]eboot, [s]hutdown" {
-
-  bindsym l exec i3-msg exit
-
-  bindsym r exec systemctl reboot
-
-  bindsym s exec systemctl shutdown
-
-  bindsym Escape mode "default"
-
-  bindsym Return mode "default"
-
-}
-
-bindsym $mod+x mode "exit: [l]ogout, [r]eboot, [s]hutdown"
-
 # target                 title     bg    text   indicator  border
 client.focused           $lavender $base $text  $rosewater $lavender
 client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
@@ -312,18 +348,22 @@ client.background        $base
 # Autostart {{{
 exec        --no-startup-id xset r rate 280 40
 exec        --no-startup-id unclutter
-exec        --no-startup-id "xautolock -detectsleep -time 10 -locker \"betterlockscreen -l\""
 exec        --no-startup-id xss-lock --/home/$USER/.config/i3/lock.sh
 exec        --no-startup-id nm-applet
 exec        --no-startup-id mousetrap -t 7
 exec        --no-startup-id dunst
 exec        --no-startup-id sleep 1;picom --corner-radius 5 
 exec        --no-startup-id urxvtd
+exec        --no-startup-id export LANG=en_US.UTF-8
+exec        --no-startup-id export LANGUAGE=en_US:en
+exec        --no-startup-id export LC_ALL=en_US.UTF-8
+exec        --no-startup-id /home/$USER/.config/i3/battery.sh -n -D -L 20 -l 10 &
 exec_always --no-startup-id sleep 1;/home/$USER/.config/polybar/launch.sh
 exec        --no-startup-id sleep 2; udiskie
 exec        --no-startup-id sleep 1; pipewire & pipewire-pulse & pipewire-media-session
-exec        --no-startup-id feh --bg-scale /home/$USER/Immagini/Wallpapers/Vocaloid/Miku.jpg
+exec        --no-startup-id feh --bg-scale /home/$USER/Immagini/Wallpapers/Vocaloid/Miku9.jpg
 # }}}
 
+## I don't like tbe mouse to follow my focus...
 focus_follows_mouse no
 

@@ -1,0 +1,113 @@
+
+@theme "/usr/share/rofi/themes/arthur.rasi"
+
+window { 
+	width: 700;
+    height: 757;
+    orientation: vertical;
+    location: center;
+    anchor: center;
+    transparency: "screenshot";
+    border-color: @transparent;   
+    border: 0px;
+    border-radius: 0px;
+    spacing: 5;
+}
+
+mainbox {
+	children: [imagebox, inputbar, listview];
+}
+
+
+// ELEMENT
+// -----------------------------------
+
+element {
+	padding: 4 12;
+	text-color: #FFFFFF;
+	
+}
+
+element selected {
+    margin: 5 5 5 5;
+	background-color: #74adc0;
+	border: 2px 2px 2px 2px;
+}
+
+element-text {
+	background-color: inherit;
+	text-color: inherit;
+}
+
+
+element-icon {
+    background-color: inherit;
+    text-color: inherit;
+    size: 1.7em;
+}
+
+listview {
+margin: 5 5 5 5;
+	columns: 3;
+	lines: 8;
+	padding: 8 0;
+	fixed-height: true;
+	fixed-columns: true;
+	fixed-lines: true;
+	border: 0;
+    border-radius: 20px;
+}
+
+// INPUT BAR 
+//------------------------------------------------
+
+entry {
+	text-color: #000000;
+	padding: 0 10 0 0;
+	margin: 0 2 0 0;
+}
+
+inputbar {
+	border: 0;
+  border-radius: 10px;
+  background-color:  #b7bdf8;
+  margin: 5 5 5 5;
+} 
+
+prompt {
+	text-color: #000000;
+	padding: 0 4 0 5;
+	margin: 0 0 0 0;
+
+}
+
+configuration {
+  display-drun: "Search:";
+  modi: "drun,run,window";
+  font: "Fira code bold";
+  show-icons: true;
+  icon-theme: "Papirus";
+
+}
+
+// IMAGE
+//------------------------------------------------
+
+imagebox { 
+	padding: 0 0 0 0;
+    margin: 5 5 5 5;
+	background-color:  #b7bdf8;
+	border: 2px 2px 2px 2px;
+    border-radius: 20px;
+	children: [image];
+}
+
+image {
+	background-image: url("~/.config/rofi/images/lofi.jpg", width);
+
+    border-radius: 20px;
+    background-color: #74adc0;
+	border: 2px 2px 2px 2px;
+}
+
+

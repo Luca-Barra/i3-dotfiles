@@ -1,0 +1,226 @@
+set previewer ~/.config/lf/lf_kitty_preview
+set cleaner ~/.config/lf/lf_kitty_clean
+set ifs "\n"
+set scrolloff 10
+set icons
+# set drawbox
+set incsearch
+set smartcase
+set ignorecase
+set anchorfind
+set findlen 1
+set tabstop 4
+set info size
+set preview
+set dircounts
+setlocal ~/Downloads sortby "atime"
+setlocal ~/Downloads reverse
+set number
+set relativenumber
+
+# ========== Commands ==========
+
+# Override the default open for file opening (binded to 'l' by default)
+cmd open &{{
+  case $(file --mime-type "$(readlink -f $f)" -b) in
+    text/*|application/json|inode/x-empty|application/octet-stream) lf -remote "send $id \$$EDITOR \$fx";;
+    application/pdf) zathura $fx &;;
+    text/x-tex) nvim $fx;;
+    *) for f in $fx; do open $f > /dev/null 2> /dev/null & done;;
+  esac
+}}
+
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+
+# Create a directory with the selected items
+cmd new-folder-with-selection ${{
+  set -f
+  printf "Directory name: "
+  read newd
+  mkdir -- "$newd"
+  mv -- $fx "$newd"
+}}
+
+cmd chmod ${{
+  printf "\nMode Bits: "
+  read ans
+  for file in "$fx"
+  do
+    chmod $ans $file
+  done
+  lf -remote 'send reload'
+}}
+
+cmd extract ${{
+  set -f
+  case $f in
+    *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+    *.tar.gz|*.tgz) tar xzvf $f;;
+    *.tar.xz|*.txz) tar xJvf $f;;
+    *.tar) tar xvf $f;;
+    *.zip) unzip $f;;
+    *.rar) unrar x $f;;
+    *.7z) 7z x $f;;
+    *) echo "Unsupported format";;
+  esac
+}}
+
+cmd tar ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    tar czf $1.tar.gz $1
+    rm -rf $1
+}}
+
+cmd zip ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    zip -r $1.zip $1
+    rm -rf $1
+}}
+
+cmd delete ${{
+  set -f
+  printf "\n$fx\n"
+  printf "delete?[y/N]"
+  read ans
+  if [[ $ans == "y" ]]; then
+    rm -rf $fx
+  fi
+}}
+
+cmd trash !{{
+  set -f
+  printf "\nItems to be trashed:\n$fx\n\nTrash? [y/N]"
+  read ans
+  if [[ $ans == "y" ]]; then
+    trash -F $fx && echo "Trash complete!"
+  elif [[ $ans == "n" ]]; then
+    echo "Canceled!"
+  else
+    echo "Failed! Use y to trash."
+  fi
+}}
+
+cmd select-all :unselect; invert
+
+# Bulk rename on selected files or all the non-hidden files in the current directory if no selection
+cmd bulk-rename ${{
+  old="$(mktemp)"
+  new="$(mktemp)"
+  if [ -n "$fs" ]; then
+    fs="$(basename $fs)"
+  else
+    fs="$(ls)"
+  fi
+  printf '%s\n' "$fs" >"$old"
+  printf '%s\n' "$fs" >"$new"
+  $EDITOR "$new"
+  [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+  paste "$old" "$new" | while IFS= read -r names; do
+    src="$(printf '%s' "$names" | cut -f1)"
+    dst="$(printf '%s' "$names" | cut -f2)"
+    if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+        continue
+    fi
+    mv -- "$src" "$dst"
+  done
+  rm -- "$old" "$new"
+  lf -remote "send $id unselect"
+}}
+
+# Copy the file names (including extension) of the selections separated by \n
+cmd copy-filename ${{
+  names="$(echo $fx | tr ' ' '\n' | xargs -I{} basename {})"
+  echo $names | tr ' ' '\n' | pbcopy
+}}
+
+# Copy the absolute paths of selections separated by \n
+cmd copy-absolute-path ${{
+  echo $fx | tr ' ' '\n' | pbcopy
+}}
+
+# Select the file or directory via fzf
+cmd fzf-select ${{
+  IFS=' '
+  exclude=$(cat $HOME/exclude | sed 's/^/--exclude /' | tr '\n' ' ')
+  select=$(fd --hidden --follow $exclude | fzf) || true
+  lf -remote "send $id select $select"
+}}
+
+# cd into the selected directory via fzf
+cmd fzf-cd ${{
+  IFS=' '
+  exclude=$(cat $HOME/exclude | sed 's/^/--exclude /' | tr '\n' ' ')
+  select=$(fd --type d --hidden --follow $exclude | fzf) || true
+  lf -remote "send $id cd $select"
+}}
+
+# zoxide
+cmd z %{{
+  result="$(zoxide query --exclude $PWD $@ | sed 's/\\/\\\\/g;s/"/\\"/g')"
+  lf -remote "send $id cd \"$result\""
+}}
+
+cmd zi ${{
+  result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
+  lf -remote "send $id cd \"$result\""
+}}
+
+# Git for dotfiles
+cmd dot ${{
+  git --git-dir=/Users/rockyzhang/dotfiles/ --work-tree=/Users/rockyzhang $@
+}}
+
+# ========== Mappings ==========
+
+# Remove some defaults
+map gh
+map d
+map y
+map <space>
+map zh
+
+map z. set hidden!
+map <tab> :toggle;down
+map yy copy
+map yn copy-filename
+map yP copy-absolute-path
+map <enter> shell
+map d delete
+map T trash
+# list the size of each item in the current directory
+map U !printf "\n";du -csh *
+map <c-f> fzf-select
+map <c-j> fzf-cd
+# give a name and then make a directory
+map <c-n> push :mkdir<space>
+map <a-n> new-folder-with-selection
+map x cut
+# give a name and then use neovim to edit it
+map V push :!nvim<space>
+
+# Navigate among the parent directories
+map [ push hkl
+map ] push hjl
+
+# Rename
+map r
+map A rename # at the very end
+map I push A<c-a> # at the very beginning
+map rn push A<c-u> # rename the filename
+map re push A<c-f><c-k> # rename the extension
+map <c-r> bulk-rename
+
+# Use <space> as the leader key
+# compress (give a name like abc and it will compress the selected items to abc.zip)
+map <space>c push :zip<space>
+# extract
+map <space>x extract
+# Open the directory in Finder on macOS
+map <space>f &if [[ -d $f ]]; then open $f; fi
+
+cmap <tab> cmd-menu-complete
+cmap <backtab> cmd-menu-complete-back
